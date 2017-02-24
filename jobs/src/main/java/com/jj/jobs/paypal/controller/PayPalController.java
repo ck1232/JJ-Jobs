@@ -29,6 +29,7 @@ public class PayPalController {
 		try {
 			payPalService.updateTransaction();
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.error("[Error]/updateTransaction - "+ e.getMessage());
 		}
 		logger.debug("[End]/updateTransaction - "+ df.format(new Date()));

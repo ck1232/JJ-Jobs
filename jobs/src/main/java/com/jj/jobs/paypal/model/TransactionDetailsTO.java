@@ -19,7 +19,7 @@ public class TransactionDetailsTO {
 	private TransactionPayerInfo transactionPayerInfo;
 	private TransactionPaymentInfo transactionPaymentInfo;
 	private List<TransactionPaymentInfoOption> transactionPaymentInfoOptionList;
-	private TransactionPaymentItem transactionPaymentItem;
+	private List<TransactionPaymentItem> transactionPaymentItemList;
 	private TransactionShippingOption transactionShippingOption;
 	
 	public TransactionDetailsTO(){
@@ -78,15 +78,7 @@ public class TransactionDetailsTO {
 		this.transactionPaymentInfoOptionList = transactionPaymentInfoOptionList;
 	}
 
-	public TransactionPaymentItem getTransactionPaymentItem() {
-		return transactionPaymentItem;
-	}
-
-	public void setTransactionPaymentItem(
-			TransactionPaymentItem transactionPaymentItem) {
-		this.transactionPaymentItem = transactionPaymentItem;
-	}
-
+	
 	public TransactionShippingOption getTransactionShippingOption() {
 		return transactionShippingOption;
 	}
@@ -94,6 +86,15 @@ public class TransactionDetailsTO {
 	public void setTransactionShippingOption(
 			TransactionShippingOption transactionShippingOption) {
 		this.transactionShippingOption = transactionShippingOption;
+	}
+
+	public List<TransactionPaymentItem> getTransactionPaymentItemList() {
+		return transactionPaymentItemList;
+	}
+
+	public void setTransactionPaymentItemList(
+			List<TransactionPaymentItem> transactionPaymentItemList) {
+		this.transactionPaymentItemList = transactionPaymentItemList;
 	}
 	
 	

@@ -3,7 +3,7 @@ package com.jj.jobs.model;
 public class TransactionPaymentInfoOptionKey {
     private String transactionid;
 
-    private String number;
+    private String name;
 
     public String getTransactionid() {
         return transactionid;
@@ -13,11 +13,11 @@ public class TransactionPaymentInfoOptionKey {
         this.transactionid = transactionid;
     }
 
-    public String getNumber() {
-        return number;
+    public String getName() {
+        return name;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setName(String name) {
+        this.name = name;
     }
 }
