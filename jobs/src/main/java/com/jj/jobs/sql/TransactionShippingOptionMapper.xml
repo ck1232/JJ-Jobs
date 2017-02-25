@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jj.jobs.dao.TransactionShippingOptionMapper">
+  <resultMap id="BaseResultMap" type="com.jj.jobs.model.TransactionShippingOption">
+    <id column="transactionId" jdbcType="VARCHAR" property="transactionid" />
+    <result column="shippingcalculationmode" jdbcType="VARCHAR" property="shippingcalculationmode" />
+    <result column="insuranceoptionselected" jdbcType="VARCHAR" property="insuranceoptionselected" />
+    <result column="shippingoptionisdefault" jdbcType="VARCHAR" property="shippingoptionisdefault" />
+    <result column="shippingoptionamount" jdbcType="DECIMAL" property="shippingoptionamount" />
+    <result column="shippingoptionname" jdbcType="VARCHAR" property="shippingoptionname" />
+    <result column="createdon" jdbcType="TIMESTAMP" property="createdon" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    transactionId, shippingcalculationmode, insuranceoptionselected, shippingoptionisdefault, 
+    shippingoptionamount, shippingoptionname, createdon
+  </sql>
+  <select id="selectByExample" parameterType="com.jj.jobs.model.TransactionShippingOptionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from transaction_shipping_option
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from transaction_shipping_option
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from transaction_shipping_option
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jj.jobs.model.TransactionShippingOptionExample">
+    delete from transaction_shipping_option
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jj.jobs.model.TransactionShippingOption">
+    insert into transaction_shipping_option (transactionId, shippingcalculationmode, 
+      insuranceoptionselected, shippingoptionisdefault, 
+      shippingoptionamount, shippingoptionname, 
+      createdon)
+    values (#{transactionid,jdbcType=VARCHAR}, #{shippingcalculationmode,jdbcType=VARCHAR}, 
+      #{insuranceoptionselected,jdbcType=VARCHAR}, #{shippingoptionisdefault,jdbcType=VARCHAR}, 
+      #{shippingoptionamount,jdbcType=DECIMAL}, #{shippingoptionname,jdbcType=VARCHAR}, 
+      #{createdon,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jj.jobs.model.TransactionShippingOption">
+    insert into transaction_shipping_option
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="transactionid != null">
+        transactionId,
+      </if>
+      <if test="shippingcalculationmode != null">
+        shippingcalculationmode,
+      </if>
+      <if test="insuranceoptionselected != null">
+        insuranceoptionselected,
+      </if>
+      <if test="shippingoptionisdefault != null">
+        shippingoptionisdefault,
+      </if>
+      <if test="shippingoptionamount != null">
+        shippingoptionamount,
+      </if>
+      <if test="shippingoptionname != null">
+        shippingoptionname,
+      </if>
+      <if test="createdon != null">
+        createdon,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="transactionid != null">
+        #{transactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingcalculationmode != null">
+        #{shippingcalculationmode,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceoptionselected != null">
+        #{insuranceoptionselected,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingoptionisdefault != null">
+        #{shippingoptionisdefault,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingoptionamount != null">
+        #{shippingoptionamount,jdbcType=DECIMAL},
+      </if>
+      <if test="shippingoptionname != null">
+        #{shippingoptionname,jdbcType=VARCHAR},
+      </if>
+      <if test="createdon != null">
+        #{createdon,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jj.jobs.model.TransactionShippingOptionExample" resultType="java.lang.Integer">
+    select count(*) from transaction_shipping_option
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update transaction_shipping_option
+    <set>
+      <if test="record.transactionid != null">
+        transactionId = #{record.transactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shippingcalculationmode != null">
+        shippingcalculationmode = #{record.shippingcalculationmode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insuranceoptionselected != null">
+        insuranceoptionselected = #{record.insuranceoptionselected,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shippingoptionisdefault != null">
+        shippingoptionisdefault = #{record.shippingoptionisdefault,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shippingoptionamount != null">
+        shippingoptionamount = #{record.shippingoptionamount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.shippingoptionname != null">
+        shippingoptionname = #{record.shippingoptionname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdon != null">
+        createdon = #{record.createdon,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update transaction_shipping_option
+    set transactionId = #{record.transactionid,jdbcType=VARCHAR},
+      shippingcalculationmode = #{record.shippingcalculationmode,jdbcType=VARCHAR},
+      insuranceoptionselected = #{record.insuranceoptionselected,jdbcType=VARCHAR},
+      shippingoptionisdefault = #{record.shippingoptionisdefault,jdbcType=VARCHAR},
+      shippingoptionamount = #{record.shippingoptionamount,jdbcType=DECIMAL},
+      shippingoptionname = #{record.shippingoptionname,jdbcType=VARCHAR},
+      createdon = #{record.createdon,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jj.jobs.model.TransactionShippingOption">
+    update transaction_shipping_option
+    <set>
+      <if test="shippingcalculationmode != null">
+        shippingcalculationmode = #{shippingcalculationmode,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceoptionselected != null">
+        insuranceoptionselected = #{insuranceoptionselected,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingoptionisdefault != null">
+        shippingoptionisdefault = #{shippingoptionisdefault,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingoptionamount != null">
+        shippingoptionamount = #{shippingoptionamount,jdbcType=DECIMAL},
+      </if>
+      <if test="shippingoptionname != null">
+        shippingoptionname = #{shippingoptionname,jdbcType=VARCHAR},
+      </if>
+      <if test="createdon != null">
+        createdon = #{createdon,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jj.jobs.model.TransactionShippingOption">
+    update transaction_shipping_option
+    set shippingcalculationmode = #{shippingcalculationmode,jdbcType=VARCHAR},
+      insuranceoptionselected = #{insuranceoptionselected,jdbcType=VARCHAR},
+      shippingoptionisdefault = #{shippingoptionisdefault,jdbcType=VARCHAR},
+      shippingoptionamount = #{shippingoptionamount,jdbcType=DECIMAL},
+      shippingoptionname = #{shippingoptionname,jdbcType=VARCHAR},
+      createdon = #{createdon,jdbcType=TIMESTAMP}
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+  </update>
+</mapper>

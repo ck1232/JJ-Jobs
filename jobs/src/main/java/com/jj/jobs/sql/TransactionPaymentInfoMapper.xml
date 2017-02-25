@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jj.jobs.dao.TransactionPaymentInfoMapper">
+  <resultMap id="BaseResultMap" type="com.jj.jobs.model.TransactionPaymentInfo">
+    <id column="transactionId" jdbcType="VARCHAR" property="transactionid" />
+    <result column="ebaytransactionId" jdbcType="VARCHAR" property="ebaytransactionid" />
+    <result column="parenttransactionId" jdbcType="VARCHAR" property="parenttransactionid" />
+    <result column="receiptId" jdbcType="VARCHAR" property="receiptid" />
+    <result column="transactiontype" jdbcType="VARCHAR" property="transactiontype" />
+    <result column="paymenttype" jdbcType="VARCHAR" property="paymenttype" />
+    <result column="refundsourcecodetype" jdbcType="VARCHAR" property="refundsourcecodetype" />
+    <result column="expectedecheckclearDate" jdbcType="VARCHAR" property="expectedecheckcleardate" />
+    <result column="paymentDate" jdbcType="VARCHAR" property="paymentdate" />
+    <result column="grossAmount" jdbcType="DECIMAL" property="grossamount" />
+    <result column="feeAmount" jdbcType="DECIMAL" property="feeamount" />
+    <result column="financingFeeAmount" jdbcType="DECIMAL" property="financingfeeamount" />
+    <result column="financingTotalCost" jdbcType="DECIMAL" property="financingtotalcost" />
+    <result column="financingMonthlyPayment" jdbcType="DECIMAL" property="financingmonthlypayment" />
+    <result column="isfinancing" jdbcType="VARCHAR" property="isfinancing" />
+    <result column="settleAmount" jdbcType="DECIMAL" property="settleamount" />
+    <result column="taxAmount" jdbcType="DECIMAL" property="taxamount" />
+    <result column="exchangeRate" jdbcType="VARCHAR" property="exchangerate" />
+    <result column="paymentStatus" jdbcType="VARCHAR" property="paymentstatus" />
+    <result column="invoiceId" jdbcType="VARCHAR" property="invoiceid" />
+    <result column="custom" jdbcType="VARCHAR" property="custom" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="salesTax" jdbcType="VARCHAR" property="salestax" />
+    <result column="createdon" jdbcType="TIMESTAMP" property="createdon" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    transactionId, ebaytransactionId, parenttransactionId, receiptId, transactiontype, 
+    paymenttype, refundsourcecodetype, expectedecheckclearDate, paymentDate, grossAmount, 
+    feeAmount, financingFeeAmount, financingTotalCost, financingMonthlyPayment, isfinancing, 
+    settleAmount, taxAmount, exchangeRate, paymentStatus, invoiceId, custom, memo, salesTax, 
+    createdon
+  </sql>
+  <select id="selectByExample" parameterType="com.jj.jobs.model.TransactionPaymentInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from transaction_payment_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from transaction_payment_info
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from transaction_payment_info
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jj.jobs.model.TransactionPaymentInfoExample">
+    delete from transaction_payment_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jj.jobs.model.TransactionPaymentInfo">
+    insert into transaction_payment_info (transactionId, ebaytransactionId, 
+      parenttransactionId, receiptId, transactiontype, 
+      paymenttype, refundsourcecodetype, expectedecheckclearDate, 
+      paymentDate, grossAmount, feeAmount, 
+      financingFeeAmount, financingTotalCost, 
+      financingMonthlyPayment, isfinancing, settleAmount, 
+      taxAmount, exchangeRate, paymentStatus, 
+      invoiceId, custom, memo, 
+      salesTax, createdon)
+    values (#{transactionid,jdbcType=VARCHAR}, #{ebaytransactionid,jdbcType=VARCHAR}, 
+      #{parenttransactionid,jdbcType=VARCHAR}, #{receiptid,jdbcType=VARCHAR}, #{transactiontype,jdbcType=VARCHAR}, 
+      #{paymenttype,jdbcType=VARCHAR}, #{refundsourcecodetype,jdbcType=VARCHAR}, #{expectedecheckcleardate,jdbcType=VARCHAR}, 
+      #{paymentdate,jdbcType=VARCHAR}, #{grossamount,jdbcType=DECIMAL}, #{feeamount,jdbcType=DECIMAL}, 
+      #{financingfeeamount,jdbcType=DECIMAL}, #{financingtotalcost,jdbcType=DECIMAL}, 
+      #{financingmonthlypayment,jdbcType=DECIMAL}, #{isfinancing,jdbcType=VARCHAR}, #{settleamount,jdbcType=DECIMAL}, 
+      #{taxamount,jdbcType=DECIMAL}, #{exchangerate,jdbcType=VARCHAR}, #{paymentstatus,jdbcType=VARCHAR}, 
+      #{invoiceid,jdbcType=VARCHAR}, #{custom,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, 
+      #{salestax,jdbcType=VARCHAR}, #{createdon,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jj.jobs.model.TransactionPaymentInfo">
+    insert into transaction_payment_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="transactionid != null">
+        transactionId,
+      </if>
+      <if test="ebaytransactionid != null">
+        ebaytransactionId,
+      </if>
+      <if test="parenttransactionid != null">
+        parenttransactionId,
+      </if>
+      <if test="receiptid != null">
+        receiptId,
+      </if>
+      <if test="transactiontype != null">
+        transactiontype,
+      </if>
+      <if test="paymenttype != null">
+        paymenttype,
+      </if>
+      <if test="refundsourcecodetype != null">
+        refundsourcecodetype,
+      </if>
+      <if test="expectedecheckcleardate != null">
+        expectedecheckclearDate,
+      </if>
+      <if test="paymentdate != null">
+        paymentDate,
+      </if>
+      <if test="grossamount != null">
+        grossAmount,
+      </if>
+      <if test="feeamount != null">
+        feeAmount,
+      </if>
+      <if test="financingfeeamount != null">
+        financingFeeAmount,
+      </if>
+      <if test="financingtotalcost != null">
+        financingTotalCost,
+      </if>
+      <if test="financingmonthlypayment != null">
+        financingMonthlyPayment,
+      </if>
+      <if test="isfinancing != null">
+        isfinancing,
+      </if>
+      <if test="settleamount != null">
+        settleAmount,
+      </if>
+      <if test="taxamount != null">
+        taxAmount,
+      </if>
+      <if test="exchangerate != null">
+        exchangeRate,
+      </if>
+      <if test="paymentstatus != null">
+        paymentStatus,
+      </if>
+      <if test="invoiceid != null">
+        invoiceId,
+      </if>
+      <if test="custom != null">
+        custom,
+      </if>
+      <if test="memo != null">
+        memo,
+      </if>
+      <if test="salestax != null">
+        salesTax,
+      </if>
+      <if test="createdon != null">
+        createdon,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="transactionid != null">
+        #{transactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="ebaytransactionid != null">
+        #{ebaytransactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="parenttransactionid != null">
+        #{parenttransactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptid != null">
+        #{receiptid,jdbcType=VARCHAR},
+      </if>
+      <if test="transactiontype != null">
+        #{transactiontype,jdbcType=VARCHAR},
+      </if>
+      <if test="paymenttype != null">
+        #{paymenttype,jdbcType=VARCHAR},
+      </if>
+      <if test="refundsourcecodetype != null">
+        #{refundsourcecodetype,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedecheckcleardate != null">
+        #{expectedecheckcleardate,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentdate != null">
+        #{paymentdate,jdbcType=VARCHAR},
+      </if>
+      <if test="grossamount != null">
+        #{grossamount,jdbcType=DECIMAL},
+      </if>
+      <if test="feeamount != null">
+        #{feeamount,jdbcType=DECIMAL},
+      </if>
+      <if test="financingfeeamount != null">
+        #{financingfeeamount,jdbcType=DECIMAL},
+      </if>
+      <if test="financingtotalcost != null">
+        #{financingtotalcost,jdbcType=DECIMAL},
+      </if>
+      <if test="financingmonthlypayment != null">
+        #{financingmonthlypayment,jdbcType=DECIMAL},
+      </if>
+      <if test="isfinancing != null">
+        #{isfinancing,jdbcType=VARCHAR},
+      </if>
+      <if test="settleamount != null">
+        #{settleamount,jdbcType=DECIMAL},
+      </if>
+      <if test="taxamount != null">
+        #{taxamount,jdbcType=DECIMAL},
+      </if>
+      <if test="exchangerate != null">
+        #{exchangerate,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentstatus != null">
+        #{paymentstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceid != null">
+        #{invoiceid,jdbcType=VARCHAR},
+      </if>
+      <if test="custom != null">
+        #{custom,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="salestax != null">
+        #{salestax,jdbcType=VARCHAR},
+      </if>
+      <if test="createdon != null">
+        #{createdon,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jj.jobs.model.TransactionPaymentInfoExample" resultType="java.lang.Integer">
+    select count(*) from transaction_payment_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update transaction_payment_info
+    <set>
+      <if test="record.transactionid != null">
+        transactionId = #{record.transactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ebaytransactionid != null">
+        ebaytransactionId = #{record.ebaytransactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parenttransactionid != null">
+        parenttransactionId = #{record.parenttransactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiptid != null">
+        receiptId = #{record.receiptid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transactiontype != null">
+        transactiontype = #{record.transactiontype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paymenttype != null">
+        paymenttype = #{record.paymenttype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundsourcecodetype != null">
+        refundsourcecodetype = #{record.refundsourcecodetype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expectedecheckcleardate != null">
+        expectedecheckclearDate = #{record.expectedecheckcleardate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paymentdate != null">
+        paymentDate = #{record.paymentdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grossamount != null">
+        grossAmount = #{record.grossamount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.feeamount != null">
+        feeAmount = #{record.feeamount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.financingfeeamount != null">
+        financingFeeAmount = #{record.financingfeeamount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.financingtotalcost != null">
+        financingTotalCost = #{record.financingtotalcost,jdbcType=DECIMAL},
+      </if>
+      <if test="record.financingmonthlypayment != null">
+        financingMonthlyPayment = #{record.financingmonthlypayment,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isfinancing != null">
+        isfinancing = #{record.isfinancing,jdbcType=VARCHAR},
+      </if>
+      <if test="record.settleamount != null">
+        settleAmount = #{record.settleamount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.taxamount != null">
+        taxAmount = #{record.taxamount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.exchangerate != null">
+        exchangeRate = #{record.exchangerate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paymentstatus != null">
+        paymentStatus = #{record.paymentstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceid != null">
+        invoiceId = #{record.invoiceid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custom != null">
+        custom = #{record.custom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memo != null">
+        memo = #{record.memo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salestax != null">
+        salesTax = #{record.salestax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdon != null">
+        createdon = #{record.createdon,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update transaction_payment_info
+    set transactionId = #{record.transactionid,jdbcType=VARCHAR},
+      ebaytransactionId = #{record.ebaytransactionid,jdbcType=VARCHAR},
+      parenttransactionId = #{record.parenttransactionid,jdbcType=VARCHAR},
+      receiptId = #{record.receiptid,jdbcType=VARCHAR},
+      transactiontype = #{record.transactiontype,jdbcType=VARCHAR},
+      paymenttype = #{record.paymenttype,jdbcType=VARCHAR},
+      refundsourcecodetype = #{record.refundsourcecodetype,jdbcType=VARCHAR},
+      expectedecheckclearDate = #{record.expectedecheckcleardate,jdbcType=VARCHAR},
+      paymentDate = #{record.paymentdate,jdbcType=VARCHAR},
+      grossAmount = #{record.grossamount,jdbcType=DECIMAL},
+      feeAmount = #{record.feeamount,jdbcType=DECIMAL},
+      financingFeeAmount = #{record.financingfeeamount,jdbcType=DECIMAL},
+      financingTotalCost = #{record.financingtotalcost,jdbcType=DECIMAL},
+      financingMonthlyPayment = #{record.financingmonthlypayment,jdbcType=DECIMAL},
+      isfinancing = #{record.isfinancing,jdbcType=VARCHAR},
+      settleAmount = #{record.settleamount,jdbcType=DECIMAL},
+      taxAmount = #{record.taxamount,jdbcType=DECIMAL},
+      exchangeRate = #{record.exchangerate,jdbcType=VARCHAR},
+      paymentStatus = #{record.paymentstatus,jdbcType=VARCHAR},
+      invoiceId = #{record.invoiceid,jdbcType=VARCHAR},
+      custom = #{record.custom,jdbcType=VARCHAR},
+      memo = #{record.memo,jdbcType=VARCHAR},
+      salesTax = #{record.salestax,jdbcType=VARCHAR},
+      createdon = #{record.createdon,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jj.jobs.model.TransactionPaymentInfo">
+    update transaction_payment_info
+    <set>
+      <if test="ebaytransactionid != null">
+        ebaytransactionId = #{ebaytransactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="parenttransactionid != null">
+        parenttransactionId = #{parenttransactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptid != null">
+        receiptId = #{receiptid,jdbcType=VARCHAR},
+      </if>
+      <if test="transactiontype != null">
+        transactiontype = #{transactiontype,jdbcType=VARCHAR},
+      </if>
+      <if test="paymenttype != null">
+        paymenttype = #{paymenttype,jdbcType=VARCHAR},
+      </if>
+      <if test="refundsourcecodetype != null">
+        refundsourcecodetype = #{refundsourcecodetype,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedecheckcleardate != null">
+        expectedecheckclearDate = #{expectedecheckcleardate,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentdate != null">
+        paymentDate = #{paymentdate,jdbcType=VARCHAR},
+      </if>
+      <if test="grossamount != null">
+        grossAmount = #{grossamount,jdbcType=DECIMAL},
+      </if>
+      <if test="feeamount != null">
+        feeAmount = #{feeamount,jdbcType=DECIMAL},
+      </if>
+      <if test="financingfeeamount != null">
+        financingFeeAmount = #{financingfeeamount,jdbcType=DECIMAL},
+      </if>
+      <if test="financingtotalcost != null">
+        financingTotalCost = #{financingtotalcost,jdbcType=DECIMAL},
+      </if>
+      <if test="financingmonthlypayment != null">
+        financingMonthlyPayment = #{financingmonthlypayment,jdbcType=DECIMAL},
+      </if>
+      <if test="isfinancing != null">
+        isfinancing = #{isfinancing,jdbcType=VARCHAR},
+      </if>
+      <if test="settleamount != null">
+        settleAmount = #{settleamount,jdbcType=DECIMAL},
+      </if>
+      <if test="taxamount != null">
+        taxAmount = #{taxamount,jdbcType=DECIMAL},
+      </if>
+      <if test="exchangerate != null">
+        exchangeRate = #{exchangerate,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentstatus != null">
+        paymentStatus = #{paymentstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceid != null">
+        invoiceId = #{invoiceid,jdbcType=VARCHAR},
+      </if>
+      <if test="custom != null">
+        custom = #{custom,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="salestax != null">
+        salesTax = #{salestax,jdbcType=VARCHAR},
+      </if>
+      <if test="createdon != null">
+        createdon = #{createdon,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jj.jobs.model.TransactionPaymentInfo">
+    update transaction_payment_info
+    set ebaytransactionId = #{ebaytransactionid,jdbcType=VARCHAR},
+      parenttransactionId = #{parenttransactionid,jdbcType=VARCHAR},
+      receiptId = #{receiptid,jdbcType=VARCHAR},
+      transactiontype = #{transactiontype,jdbcType=VARCHAR},
+      paymenttype = #{paymenttype,jdbcType=VARCHAR},
+      refundsourcecodetype = #{refundsourcecodetype,jdbcType=VARCHAR},
+      expectedecheckclearDate = #{expectedecheckcleardate,jdbcType=VARCHAR},
+      paymentDate = #{paymentdate,jdbcType=VARCHAR},
+      grossAmount = #{grossamount,jdbcType=DECIMAL},
+      feeAmount = #{feeamount,jdbcType=DECIMAL},
+      financingFeeAmount = #{financingfeeamount,jdbcType=DECIMAL},
+      financingTotalCost = #{financingtotalcost,jdbcType=DECIMAL},
+      financingMonthlyPayment = #{financingmonthlypayment,jdbcType=DECIMAL},
+      isfinancing = #{isfinancing,jdbcType=VARCHAR},
+      settleAmount = #{settleamount,jdbcType=DECIMAL},
+      taxAmount = #{taxamount,jdbcType=DECIMAL},
+      exchangeRate = #{exchangerate,jdbcType=VARCHAR},
+      paymentStatus = #{paymentstatus,jdbcType=VARCHAR},
+      invoiceId = #{invoiceid,jdbcType=VARCHAR},
+      custom = #{custom,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      salesTax = #{salestax,jdbcType=VARCHAR},
+      createdon = #{createdon,jdbcType=TIMESTAMP}
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+  </update>
+</mapper>

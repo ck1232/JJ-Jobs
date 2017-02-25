@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jj.jobs.dao.TransactionPaymentItemMapper">
+  <resultMap id="BaseResultMap" type="com.jj.jobs.model.TransactionPaymentItem">
+    <id column="transactionId" jdbcType="VARCHAR" property="transactionid" />
+    <id column="number" jdbcType="VARCHAR" property="number" />
+    <result column="ebayItemTxnId" jdbcType="VARCHAR" property="ebayitemtxnid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="quantity" jdbcType="VARCHAR" property="quantity" />
+    <result column="shippingAmount" jdbcType="DECIMAL" property="shippingamount" />
+    <result column="handlingAmount" jdbcType="DECIMAL" property="handlingamount" />
+    <result column="couponID" jdbcType="VARCHAR" property="couponid" />
+    <result column="couponAmount" jdbcType="VARCHAR" property="couponamount" />
+    <result column="couponAmountCurrency" jdbcType="VARCHAR" property="couponamountcurrency" />
+    <result column="loyaltyCardDiscountAmount" jdbcType="VARCHAR" property="loyaltycarddiscountamount" />
+    <result column="loyaltyCardDiscountCurrency" jdbcType="VARCHAR" property="loyaltycarddiscountcurrency" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="createdon" jdbcType="TIMESTAMP" property="createdon" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    transactionId, number, ebayItemTxnId, name, quantity, shippingAmount, handlingAmount, 
+    couponID, couponAmount, couponAmountCurrency, loyaltyCardDiscountAmount, loyaltyCardDiscountCurrency, 
+    amount, createdon
+  </sql>
+  <select id="selectByExample" parameterType="com.jj.jobs.model.TransactionPaymentItemExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from transaction_payment_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.jj.jobs.model.TransactionPaymentItemKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from transaction_payment_item
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+      and number = #{number,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.jj.jobs.model.TransactionPaymentItemKey">
+    delete from transaction_payment_item
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+      and number = #{number,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jj.jobs.model.TransactionPaymentItemExample">
+    delete from transaction_payment_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jj.jobs.model.TransactionPaymentItem">
+    insert into transaction_payment_item (transactionId, number, ebayItemTxnId, 
+      name, quantity, shippingAmount, 
+      handlingAmount, couponID, couponAmount, 
+      couponAmountCurrency, loyaltyCardDiscountAmount, 
+      loyaltyCardDiscountCurrency, amount, createdon
+      )
+    values (#{transactionid,jdbcType=VARCHAR}, #{number,jdbcType=VARCHAR}, #{ebayitemtxnid,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{quantity,jdbcType=VARCHAR}, #{shippingamount,jdbcType=DECIMAL}, 
+      #{handlingamount,jdbcType=DECIMAL}, #{couponid,jdbcType=VARCHAR}, #{couponamount,jdbcType=VARCHAR}, 
+      #{couponamountcurrency,jdbcType=VARCHAR}, #{loyaltycarddiscountamount,jdbcType=VARCHAR}, 
+      #{loyaltycarddiscountcurrency,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, #{createdon,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jj.jobs.model.TransactionPaymentItem">
+    insert into transaction_payment_item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="transactionid != null">
+        transactionId,
+      </if>
+      <if test="number != null">
+        number,
+      </if>
+      <if test="ebayitemtxnid != null">
+        ebayItemTxnId,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="quantity != null">
+        quantity,
+      </if>
+      <if test="shippingamount != null">
+        shippingAmount,
+      </if>
+      <if test="handlingamount != null">
+        handlingAmount,
+      </if>
+      <if test="couponid != null">
+        couponID,
+      </if>
+      <if test="couponamount != null">
+        couponAmount,
+      </if>
+      <if test="couponamountcurrency != null">
+        couponAmountCurrency,
+      </if>
+      <if test="loyaltycarddiscountamount != null">
+        loyaltyCardDiscountAmount,
+      </if>
+      <if test="loyaltycarddiscountcurrency != null">
+        loyaltyCardDiscountCurrency,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="createdon != null">
+        createdon,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="transactionid != null">
+        #{transactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="ebayitemtxnid != null">
+        #{ebayitemtxnid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null">
+        #{quantity,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingamount != null">
+        #{shippingamount,jdbcType=DECIMAL},
+      </if>
+      <if test="handlingamount != null">
+        #{handlingamount,jdbcType=DECIMAL},
+      </if>
+      <if test="couponid != null">
+        #{couponid,jdbcType=VARCHAR},
+      </if>
+      <if test="couponamount != null">
+        #{couponamount,jdbcType=VARCHAR},
+      </if>
+      <if test="couponamountcurrency != null">
+        #{couponamountcurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="loyaltycarddiscountamount != null">
+        #{loyaltycarddiscountamount,jdbcType=VARCHAR},
+      </if>
+      <if test="loyaltycarddiscountcurrency != null">
+        #{loyaltycarddiscountcurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="createdon != null">
+        #{createdon,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jj.jobs.model.TransactionPaymentItemExample" resultType="java.lang.Integer">
+    select count(*) from transaction_payment_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update transaction_payment_item
+    <set>
+      <if test="record.transactionid != null">
+        transactionId = #{record.transactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.number != null">
+        number = #{record.number,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ebayitemtxnid != null">
+        ebayItemTxnId = #{record.ebayitemtxnid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quantity != null">
+        quantity = #{record.quantity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shippingamount != null">
+        shippingAmount = #{record.shippingamount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.handlingamount != null">
+        handlingAmount = #{record.handlingamount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.couponid != null">
+        couponID = #{record.couponid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.couponamount != null">
+        couponAmount = #{record.couponamount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.couponamountcurrency != null">
+        couponAmountCurrency = #{record.couponamountcurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loyaltycarddiscountamount != null">
+        loyaltyCardDiscountAmount = #{record.loyaltycarddiscountamount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loyaltycarddiscountcurrency != null">
+        loyaltyCardDiscountCurrency = #{record.loyaltycarddiscountcurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null">
+        amount = #{record.amount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createdon != null">
+        createdon = #{record.createdon,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update transaction_payment_item
+    set transactionId = #{record.transactionid,jdbcType=VARCHAR},
+      number = #{record.number,jdbcType=VARCHAR},
+      ebayItemTxnId = #{record.ebayitemtxnid,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      quantity = #{record.quantity,jdbcType=VARCHAR},
+      shippingAmount = #{record.shippingamount,jdbcType=DECIMAL},
+      handlingAmount = #{record.handlingamount,jdbcType=DECIMAL},
+      couponID = #{record.couponid,jdbcType=VARCHAR},
+      couponAmount = #{record.couponamount,jdbcType=VARCHAR},
+      couponAmountCurrency = #{record.couponamountcurrency,jdbcType=VARCHAR},
+      loyaltyCardDiscountAmount = #{record.loyaltycarddiscountamount,jdbcType=VARCHAR},
+      loyaltyCardDiscountCurrency = #{record.loyaltycarddiscountcurrency,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=DECIMAL},
+      createdon = #{record.createdon,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jj.jobs.model.TransactionPaymentItem">
+    update transaction_payment_item
+    <set>
+      <if test="ebayitemtxnid != null">
+        ebayItemTxnId = #{ebayitemtxnid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null">
+        quantity = #{quantity,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingamount != null">
+        shippingAmount = #{shippingamount,jdbcType=DECIMAL},
+      </if>
+      <if test="handlingamount != null">
+        handlingAmount = #{handlingamount,jdbcType=DECIMAL},
+      </if>
+      <if test="couponid != null">
+        couponID = #{couponid,jdbcType=VARCHAR},
+      </if>
+      <if test="couponamount != null">
+        couponAmount = #{couponamount,jdbcType=VARCHAR},
+      </if>
+      <if test="couponamountcurrency != null">
+        couponAmountCurrency = #{couponamountcurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="loyaltycarddiscountamount != null">
+        loyaltyCardDiscountAmount = #{loyaltycarddiscountamount,jdbcType=VARCHAR},
+      </if>
+      <if test="loyaltycarddiscountcurrency != null">
+        loyaltyCardDiscountCurrency = #{loyaltycarddiscountcurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="createdon != null">
+        createdon = #{createdon,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+      and number = #{number,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jj.jobs.model.TransactionPaymentItem">
+    update transaction_payment_item
+    set ebayItemTxnId = #{ebayitemtxnid,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      quantity = #{quantity,jdbcType=VARCHAR},
+      shippingAmount = #{shippingamount,jdbcType=DECIMAL},
+      handlingAmount = #{handlingamount,jdbcType=DECIMAL},
+      couponID = #{couponid,jdbcType=VARCHAR},
+      couponAmount = #{couponamount,jdbcType=VARCHAR},
+      couponAmountCurrency = #{couponamountcurrency,jdbcType=VARCHAR},
+      loyaltyCardDiscountAmount = #{loyaltycarddiscountamount,jdbcType=VARCHAR},
+      loyaltyCardDiscountCurrency = #{loyaltycarddiscountcurrency,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DECIMAL},
+      createdon = #{createdon,jdbcType=TIMESTAMP}
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+      and number = #{number,jdbcType=VARCHAR}
+  </update>
+</mapper>

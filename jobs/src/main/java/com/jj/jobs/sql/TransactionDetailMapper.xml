@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jj.jobs.dao.TransactionDetailMapper">
+  <resultMap id="BaseResultMap" type="com.jj.jobs.model.TransactionDetail">
+    <id column="transactionId" jdbcType="VARCHAR" property="transactionid" />
+    <result column="tplreferenceId" jdbcType="VARCHAR" property="tplreferenceid" />
+    <result column="giftmessage" jdbcType="VARCHAR" property="giftmessage" />
+    <result column="giftreceipt" jdbcType="VARCHAR" property="giftreceipt" />
+    <result column="giftwrapname" jdbcType="VARCHAR" property="giftwrapname" />
+    <result column="buyeremailoptin" jdbcType="VARCHAR" property="buyeremailoptin" />
+    <result column="createdon" jdbcType="TIMESTAMP" property="createdon" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    transactionId, tplreferenceId, giftmessage, giftreceipt, giftwrapname, buyeremailoptin, 
+    createdon
+  </sql>
+  <select id="selectByExample" parameterType="com.jj.jobs.model.TransactionDetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from transaction_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from transaction_detail
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from transaction_detail
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jj.jobs.model.TransactionDetailExample">
+    delete from transaction_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jj.jobs.model.TransactionDetail">
+    insert into transaction_detail (transactionId, tplreferenceId, giftmessage, 
+      giftreceipt, giftwrapname, buyeremailoptin, 
+      createdon)
+    values (#{transactionid,jdbcType=VARCHAR}, #{tplreferenceid,jdbcType=VARCHAR}, #{giftmessage,jdbcType=VARCHAR}, 
+      #{giftreceipt,jdbcType=VARCHAR}, #{giftwrapname,jdbcType=VARCHAR}, #{buyeremailoptin,jdbcType=VARCHAR}, 
+      #{createdon,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jj.jobs.model.TransactionDetail">
+    insert into transaction_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="transactionid != null">
+        transactionId,
+      </if>
+      <if test="tplreferenceid != null">
+        tplreferenceId,
+      </if>
+      <if test="giftmessage != null">
+        giftmessage,
+      </if>
+      <if test="giftreceipt != null">
+        giftreceipt,
+      </if>
+      <if test="giftwrapname != null">
+        giftwrapname,
+      </if>
+      <if test="buyeremailoptin != null">
+        buyeremailoptin,
+      </if>
+      <if test="createdon != null">
+        createdon,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="transactionid != null">
+        #{transactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="tplreferenceid != null">
+        #{tplreferenceid,jdbcType=VARCHAR},
+      </if>
+      <if test="giftmessage != null">
+        #{giftmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="giftreceipt != null">
+        #{giftreceipt,jdbcType=VARCHAR},
+      </if>
+      <if test="giftwrapname != null">
+        #{giftwrapname,jdbcType=VARCHAR},
+      </if>
+      <if test="buyeremailoptin != null">
+        #{buyeremailoptin,jdbcType=VARCHAR},
+      </if>
+      <if test="createdon != null">
+        #{createdon,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jj.jobs.model.TransactionDetailExample" resultType="java.lang.Integer">
+    select count(*) from transaction_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update transaction_detail
+    <set>
+      <if test="record.transactionid != null">
+        transactionId = #{record.transactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tplreferenceid != null">
+        tplreferenceId = #{record.tplreferenceid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.giftmessage != null">
+        giftmessage = #{record.giftmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.giftreceipt != null">
+        giftreceipt = #{record.giftreceipt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.giftwrapname != null">
+        giftwrapname = #{record.giftwrapname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buyeremailoptin != null">
+        buyeremailoptin = #{record.buyeremailoptin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdon != null">
+        createdon = #{record.createdon,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update transaction_detail
+    set transactionId = #{record.transactionid,jdbcType=VARCHAR},
+      tplreferenceId = #{record.tplreferenceid,jdbcType=VARCHAR},
+      giftmessage = #{record.giftmessage,jdbcType=VARCHAR},
+      giftreceipt = #{record.giftreceipt,jdbcType=VARCHAR},
+      giftwrapname = #{record.giftwrapname,jdbcType=VARCHAR},
+      buyeremailoptin = #{record.buyeremailoptin,jdbcType=VARCHAR},
+      createdon = #{record.createdon,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jj.jobs.model.TransactionDetail">
+    update transaction_detail
+    <set>
+      <if test="tplreferenceid != null">
+        tplreferenceId = #{tplreferenceid,jdbcType=VARCHAR},
+      </if>
+      <if test="giftmessage != null">
+        giftmessage = #{giftmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="giftreceipt != null">
+        giftreceipt = #{giftreceipt,jdbcType=VARCHAR},
+      </if>
+      <if test="giftwrapname != null">
+        giftwrapname = #{giftwrapname,jdbcType=VARCHAR},
+      </if>
+      <if test="buyeremailoptin != null">
+        buyeremailoptin = #{buyeremailoptin,jdbcType=VARCHAR},
+      </if>
+      <if test="createdon != null">
+        createdon = #{createdon,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jj.jobs.model.TransactionDetail">
+    update transaction_detail
+    set tplreferenceId = #{tplreferenceid,jdbcType=VARCHAR},
+      giftmessage = #{giftmessage,jdbcType=VARCHAR},
+      giftreceipt = #{giftreceipt,jdbcType=VARCHAR},
+      giftwrapname = #{giftwrapname,jdbcType=VARCHAR},
+      buyeremailoptin = #{buyeremailoptin,jdbcType=VARCHAR},
+      createdon = #{createdon,jdbcType=TIMESTAMP}
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+  </update>
+</mapper>

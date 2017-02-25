@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jj.jobs.dao.TransactionPayerAddressMapper">
+  <resultMap id="BaseResultMap" type="com.jj.jobs.model.TransactionPayerAddress">
+    <id column="transactionId" jdbcType="VARCHAR" property="transactionid" />
+    <id column="type" jdbcType="VARCHAR" property="type" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="street1" jdbcType="VARCHAR" property="street1" />
+    <result column="street2" jdbcType="VARCHAR" property="street2" />
+    <result column="cityname" jdbcType="VARCHAR" property="cityname" />
+    <result column="stateorprovince" jdbcType="VARCHAR" property="stateorprovince" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="countryname" jdbcType="VARCHAR" property="countryname" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="postalcode" jdbcType="VARCHAR" property="postalcode" />
+    <result column="addressId" jdbcType="VARCHAR" property="addressid" />
+    <result column="addressowner" jdbcType="VARCHAR" property="addressowner" />
+    <result column="externalAddressId" jdbcType="VARCHAR" property="externaladdressid" />
+    <result column="addressstatus" jdbcType="VARCHAR" property="addressstatus" />
+    <result column="addressnormalizationstatus" jdbcType="VARCHAR" property="addressnormalizationstatus" />
+    <result column="createdon" jdbcType="TIMESTAMP" property="createdon" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    transactionId, type, name, street1, street2, cityname, stateorprovince, country, 
+    countryname, phone, postalcode, addressId, addressowner, externalAddressId, addressstatus, 
+    addressnormalizationstatus, createdon
+  </sql>
+  <select id="selectByExample" parameterType="com.jj.jobs.model.TransactionPayerAddressExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from transaction_payer_address
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.jj.jobs.model.TransactionPayerAddressKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from transaction_payer_address
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+      and type = #{type,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.jj.jobs.model.TransactionPayerAddressKey">
+    delete from transaction_payer_address
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+      and type = #{type,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jj.jobs.model.TransactionPayerAddressExample">
+    delete from transaction_payer_address
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jj.jobs.model.TransactionPayerAddress">
+    insert into transaction_payer_address (transactionId, type, name, 
+      street1, street2, cityname, 
+      stateorprovince, country, countryname, 
+      phone, postalcode, addressId, 
+      addressowner, externalAddressId, addressstatus, 
+      addressnormalizationstatus, createdon
+      )
+    values (#{transactionid,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{street1,jdbcType=VARCHAR}, #{street2,jdbcType=VARCHAR}, #{cityname,jdbcType=VARCHAR}, 
+      #{stateorprovince,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{countryname,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{postalcode,jdbcType=VARCHAR}, #{addressid,jdbcType=VARCHAR}, 
+      #{addressowner,jdbcType=VARCHAR}, #{externaladdressid,jdbcType=VARCHAR}, #{addressstatus,jdbcType=VARCHAR}, 
+      #{addressnormalizationstatus,jdbcType=VARCHAR}, #{createdon,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jj.jobs.model.TransactionPayerAddress">
+    insert into transaction_payer_address
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="transactionid != null">
+        transactionId,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="street1 != null">
+        street1,
+      </if>
+      <if test="street2 != null">
+        street2,
+      </if>
+      <if test="cityname != null">
+        cityname,
+      </if>
+      <if test="stateorprovince != null">
+        stateorprovince,
+      </if>
+      <if test="country != null">
+        country,
+      </if>
+      <if test="countryname != null">
+        countryname,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="postalcode != null">
+        postalcode,
+      </if>
+      <if test="addressid != null">
+        addressId,
+      </if>
+      <if test="addressowner != null">
+        addressowner,
+      </if>
+      <if test="externaladdressid != null">
+        externalAddressId,
+      </if>
+      <if test="addressstatus != null">
+        addressstatus,
+      </if>
+      <if test="addressnormalizationstatus != null">
+        addressnormalizationstatus,
+      </if>
+      <if test="createdon != null">
+        createdon,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="transactionid != null">
+        #{transactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="street1 != null">
+        #{street1,jdbcType=VARCHAR},
+      </if>
+      <if test="street2 != null">
+        #{street2,jdbcType=VARCHAR},
+      </if>
+      <if test="cityname != null">
+        #{cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="stateorprovince != null">
+        #{stateorprovince,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="countryname != null">
+        #{countryname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="postalcode != null">
+        #{postalcode,jdbcType=VARCHAR},
+      </if>
+      <if test="addressid != null">
+        #{addressid,jdbcType=VARCHAR},
+      </if>
+      <if test="addressowner != null">
+        #{addressowner,jdbcType=VARCHAR},
+      </if>
+      <if test="externaladdressid != null">
+        #{externaladdressid,jdbcType=VARCHAR},
+      </if>
+      <if test="addressstatus != null">
+        #{addressstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="addressnormalizationstatus != null">
+        #{addressnormalizationstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createdon != null">
+        #{createdon,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jj.jobs.model.TransactionPayerAddressExample" resultType="java.lang.Integer">
+    select count(*) from transaction_payer_address
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update transaction_payer_address
+    <set>
+      <if test="record.transactionid != null">
+        transactionId = #{record.transactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.street1 != null">
+        street1 = #{record.street1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.street2 != null">
+        street2 = #{record.street2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityname != null">
+        cityname = #{record.cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stateorprovince != null">
+        stateorprovince = #{record.stateorprovince,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null">
+        country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.countryname != null">
+        countryname = #{record.countryname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postalcode != null">
+        postalcode = #{record.postalcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addressid != null">
+        addressId = #{record.addressid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addressowner != null">
+        addressowner = #{record.addressowner,jdbcType=VARCHAR},
+      </if>
+      <if test="record.externaladdressid != null">
+        externalAddressId = #{record.externaladdressid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addressstatus != null">
+        addressstatus = #{record.addressstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addressnormalizationstatus != null">
+        addressnormalizationstatus = #{record.addressnormalizationstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdon != null">
+        createdon = #{record.createdon,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update transaction_payer_address
+    set transactionId = #{record.transactionid,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      street1 = #{record.street1,jdbcType=VARCHAR},
+      street2 = #{record.street2,jdbcType=VARCHAR},
+      cityname = #{record.cityname,jdbcType=VARCHAR},
+      stateorprovince = #{record.stateorprovince,jdbcType=VARCHAR},
+      country = #{record.country,jdbcType=VARCHAR},
+      countryname = #{record.countryname,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      postalcode = #{record.postalcode,jdbcType=VARCHAR},
+      addressId = #{record.addressid,jdbcType=VARCHAR},
+      addressowner = #{record.addressowner,jdbcType=VARCHAR},
+      externalAddressId = #{record.externaladdressid,jdbcType=VARCHAR},
+      addressstatus = #{record.addressstatus,jdbcType=VARCHAR},
+      addressnormalizationstatus = #{record.addressnormalizationstatus,jdbcType=VARCHAR},
+      createdon = #{record.createdon,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jj.jobs.model.TransactionPayerAddress">
+    update transaction_payer_address
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="street1 != null">
+        street1 = #{street1,jdbcType=VARCHAR},
+      </if>
+      <if test="street2 != null">
+        street2 = #{street2,jdbcType=VARCHAR},
+      </if>
+      <if test="cityname != null">
+        cityname = #{cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="stateorprovince != null">
+        stateorprovince = #{stateorprovince,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="countryname != null">
+        countryname = #{countryname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="postalcode != null">
+        postalcode = #{postalcode,jdbcType=VARCHAR},
+      </if>
+      <if test="addressid != null">
+        addressId = #{addressid,jdbcType=VARCHAR},
+      </if>
+      <if test="addressowner != null">
+        addressowner = #{addressowner,jdbcType=VARCHAR},
+      </if>
+      <if test="externaladdressid != null">
+        externalAddressId = #{externaladdressid,jdbcType=VARCHAR},
+      </if>
+      <if test="addressstatus != null">
+        addressstatus = #{addressstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="addressnormalizationstatus != null">
+        addressnormalizationstatus = #{addressnormalizationstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createdon != null">
+        createdon = #{createdon,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+      and type = #{type,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jj.jobs.model.TransactionPayerAddress">
+    update transaction_payer_address
+    set name = #{name,jdbcType=VARCHAR},
+      street1 = #{street1,jdbcType=VARCHAR},
+      street2 = #{street2,jdbcType=VARCHAR},
+      cityname = #{cityname,jdbcType=VARCHAR},
+      stateorprovince = #{stateorprovince,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      countryname = #{countryname,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      postalcode = #{postalcode,jdbcType=VARCHAR},
+      addressId = #{addressid,jdbcType=VARCHAR},
+      addressowner = #{addressowner,jdbcType=VARCHAR},
+      externalAddressId = #{externaladdressid,jdbcType=VARCHAR},
+      addressstatus = #{addressstatus,jdbcType=VARCHAR},
+      addressnormalizationstatus = #{addressnormalizationstatus,jdbcType=VARCHAR},
+      createdon = #{createdon,jdbcType=TIMESTAMP}
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+      and type = #{type,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jj.jobs.dao.TransactionPayerInfoMapper">
+  <resultMap id="BaseResultMap" type="com.jj.jobs.model.TransactionPayerInfo">
+    <id column="transactionId" jdbcType="VARCHAR" property="transactionid" />
+    <result column="payer" jdbcType="VARCHAR" property="payer" />
+    <result column="payerId" jdbcType="VARCHAR" property="payerid" />
+    <result column="payerStatus" jdbcType="VARCHAR" property="payerstatus" />
+    <result column="payerName" jdbcType="VARCHAR" property="payername" />
+    <result column="payerCountry" jdbcType="VARCHAR" property="payercountry" />
+    <result column="payerBusiness" jdbcType="VARCHAR" property="payerbusiness" />
+    <result column="contactPhone" jdbcType="VARCHAR" property="contactphone" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    transactionId, payer, payerId, payerStatus, payerName, payerCountry, payerBusiness, 
+    contactPhone
+  </sql>
+  <select id="selectByExample" parameterType="com.jj.jobs.model.TransactionPayerInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from transaction_payer_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from transaction_payer_info
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from transaction_payer_info
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jj.jobs.model.TransactionPayerInfoExample">
+    delete from transaction_payer_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jj.jobs.model.TransactionPayerInfo">
+    insert into transaction_payer_info (transactionId, payer, payerId, 
+      payerStatus, payerName, payerCountry, 
+      payerBusiness, contactPhone)
+    values (#{transactionid,jdbcType=VARCHAR}, #{payer,jdbcType=VARCHAR}, #{payerid,jdbcType=VARCHAR}, 
+      #{payerstatus,jdbcType=VARCHAR}, #{payername,jdbcType=VARCHAR}, #{payercountry,jdbcType=VARCHAR}, 
+      #{payerbusiness,jdbcType=VARCHAR}, #{contactphone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jj.jobs.model.TransactionPayerInfo">
+    insert into transaction_payer_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="transactionid != null">
+        transactionId,
+      </if>
+      <if test="payer != null">
+        payer,
+      </if>
+      <if test="payerid != null">
+        payerId,
+      </if>
+      <if test="payerstatus != null">
+        payerStatus,
+      </if>
+      <if test="payername != null">
+        payerName,
+      </if>
+      <if test="payercountry != null">
+        payerCountry,
+      </if>
+      <if test="payerbusiness != null">
+        payerBusiness,
+      </if>
+      <if test="contactphone != null">
+        contactPhone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="transactionid != null">
+        #{transactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="payer != null">
+        #{payer,jdbcType=VARCHAR},
+      </if>
+      <if test="payerid != null">
+        #{payerid,jdbcType=VARCHAR},
+      </if>
+      <if test="payerstatus != null">
+        #{payerstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="payername != null">
+        #{payername,jdbcType=VARCHAR},
+      </if>
+      <if test="payercountry != null">
+        #{payercountry,jdbcType=VARCHAR},
+      </if>
+      <if test="payerbusiness != null">
+        #{payerbusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="contactphone != null">
+        #{contactphone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jj.jobs.model.TransactionPayerInfoExample" resultType="java.lang.Integer">
+    select count(*) from transaction_payer_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update transaction_payer_info
+    <set>
+      <if test="record.transactionid != null">
+        transactionId = #{record.transactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payer != null">
+        payer = #{record.payer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payerid != null">
+        payerId = #{record.payerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payerstatus != null">
+        payerStatus = #{record.payerstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payername != null">
+        payerName = #{record.payername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payercountry != null">
+        payerCountry = #{record.payercountry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payerbusiness != null">
+        payerBusiness = #{record.payerbusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactphone != null">
+        contactPhone = #{record.contactphone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update transaction_payer_info
+    set transactionId = #{record.transactionid,jdbcType=VARCHAR},
+      payer = #{record.payer,jdbcType=VARCHAR},
+      payerId = #{record.payerid,jdbcType=VARCHAR},
+      payerStatus = #{record.payerstatus,jdbcType=VARCHAR},
+      payerName = #{record.payername,jdbcType=VARCHAR},
+      payerCountry = #{record.payercountry,jdbcType=VARCHAR},
+      payerBusiness = #{record.payerbusiness,jdbcType=VARCHAR},
+      contactPhone = #{record.contactphone,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jj.jobs.model.TransactionPayerInfo">
+    update transaction_payer_info
+    <set>
+      <if test="payer != null">
+        payer = #{payer,jdbcType=VARCHAR},
+      </if>
+      <if test="payerid != null">
+        payerId = #{payerid,jdbcType=VARCHAR},
+      </if>
+      <if test="payerstatus != null">
+        payerStatus = #{payerstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="payername != null">
+        payerName = #{payername,jdbcType=VARCHAR},
+      </if>
+      <if test="payercountry != null">
+        payerCountry = #{payercountry,jdbcType=VARCHAR},
+      </if>
+      <if test="payerbusiness != null">
+        payerBusiness = #{payerbusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="contactphone != null">
+        contactPhone = #{contactphone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jj.jobs.model.TransactionPayerInfo">
+    update transaction_payer_info
+    set payer = #{payer,jdbcType=VARCHAR},
+      payerId = #{payerid,jdbcType=VARCHAR},
+      payerStatus = #{payerstatus,jdbcType=VARCHAR},
+      payerName = #{payername,jdbcType=VARCHAR},
+      payerCountry = #{payercountry,jdbcType=VARCHAR},
+      payerBusiness = #{payerbusiness,jdbcType=VARCHAR},
+      contactPhone = #{contactphone,jdbcType=VARCHAR}
+    where transactionId = #{transactionid,jdbcType=VARCHAR}
+  </update>
+</mapper>
