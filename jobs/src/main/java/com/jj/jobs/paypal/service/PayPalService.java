@@ -51,6 +51,7 @@ import com.jj.jobs.dao.ViewLatestTransactionMapper;
 import com.jj.jobs.model.Transaction;
 import com.jj.jobs.model.TransactionCouponDetail;
 import com.jj.jobs.model.TransactionDetail;
+import com.jj.jobs.model.TransactionExample;
 import com.jj.jobs.model.TransactionPayerAddress;
 import com.jj.jobs.model.TransactionPayerInfo;
 import com.jj.jobs.model.TransactionPaymentInfo;
@@ -101,6 +102,69 @@ public class PayPalService {
 		this.transactionPaymentItemMapper = transactionPaymentItemMapper;
 		this.transactionShippingOptionMapper = transactionShippingOptionMapper;
 		this.payPalAPIInterfaceService = new PayPalAPIInterfaceServiceService(getDevCustomConfigurationMap());
+	}
+	public void refreshTransaction(Date date) throws Exception{
+		if(date == null){
+			return;
+		}
+		//pull record first, if success , delete old record, else keep old record
+		//search transaction with latest record time
+		List<PaymentTransactionSearchResultType> transactionLastestList = searchTransaction(date);
+		if(transactionLastestList == null){
+			//no record found , dont delete db
+		}else{
+			List<TransactionDetailsTO> transactionDetailList = new ArrayList<TransactionDetailsTO>();
+			
+			for(PaymentTransactionSearchResultType transaction : transactionLastestList){
+				//get transaction details
+				GetTransactionDetailsResponseType transactionDetail = getTransactionDetails(transaction.getTransactionID());
+				TransactionDetailsTO detailsTO = convertToTransactionDetailTO(transaction.getTransactionID(),transactionDetail);
+				transactionDetailList.add(detailsTO);
+			}
+			//delete record since date
+			TransactionExample example = new TransactionExample();
+			example.createCriteria().andTimestampGreaterThanOrEqualTo(date);
+			transactionMapper.deleteByExample(example);
+			
+			for(PaymentTransactionSearchResultType transaction : transactionLastestList){
+				//delete db record to prevent conflict
+				transactionMapper.deleteByPrimaryKey(transaction.getTransactionID());
+			}
+			
+			for(PaymentTransactionSearchResultType transaction : transactionLastestList){
+				//insert db record
+				Transaction transactionDbObj = convertToTransaction(transaction);
+				transactionDbObj.setCreatedon(new Date());
+				transactionMapper.deleteByPrimaryKey(transaction.getTransactionID());
+				transactionMapper.insert(transactionDbObj);
+			}
+			
+			for(TransactionDetailsTO detailsTO:transactionDetailList){
+				transactionCouponDetailMapper.insert(detailsTO.getTransactionCouponDetail());
+				if(detailsTO.getAddressList() != null && detailsTO.getAddressList().size() > 0){
+					for(TransactionPayerAddress address : detailsTO.getAddressList()){
+						transactionPayerAddressMapper.insert(address);
+					}
+				}
+				transactionPayerInfoMapper.insert(detailsTO.getTransactionPayerInfo());
+				transactionPaymentInfoMapper.insert(detailsTO.getTransactionPaymentInfo());
+				if(detailsTO.getTransactionPaymentInfoOptionList() != null && detailsTO.getTransactionPaymentInfoOptionList().size() > 0){
+					for(TransactionPaymentInfoOption option : detailsTO.getTransactionPaymentInfoOptionList()){
+						transactionPaymentInfoOptionMapper.insert(option);
+					}
+				}
+				
+				if(detailsTO.getTransactionPaymentItemList() != null && detailsTO.getTransactionPaymentItemList().size() > 0){
+					for(TransactionPaymentItem item : detailsTO.getTransactionPaymentItemList()){
+						transactionPaymentItemMapper.insert(item);
+					}
+				}
+				if(detailsTO.getTransactionShippingOption() != null){
+					transactionShippingOptionMapper.insert(detailsTO.getTransactionShippingOption());
+				}
+				transactionDetailMapper.insert(detailsTO.getTransactionDetail());
+			}
+		}
 	}
 	
 	public void updateTransaction() throws Exception{
@@ -368,7 +432,7 @@ public class PayPalService {
 		return transactionDetail;
 	}
 
-	public List<PaymentTransactionSearchResultType> searchTransaction(Date startDate){
+	public List<PaymentTransactionSearchResultType> searchTransaction(Date startDate) throws Exception{
 		DateFormat dt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		TransactionSearchReq txnreq = new TransactionSearchReq();
 		TransactionSearchRequestType requestType = new TransactionSearchRequestType();
@@ -391,8 +455,8 @@ public class PayPalService {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw e;
 		}
-		return null;
 	}
 	
 	private ICredential getCredential(){
