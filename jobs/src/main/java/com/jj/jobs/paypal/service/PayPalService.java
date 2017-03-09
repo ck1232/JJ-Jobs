@@ -373,7 +373,7 @@ public class PayPalService {
 		info.setContactphone(payerInfo.getContactPhone());
 		info.setPayer(payerInfo.getPayer());
 		info.setPayerbusiness(payerInfo.getPayerBusiness());
-		info.setPayercountry(payerInfo.getPayerCountry().getValue());
+		info.setPayercountry(payerInfo.getPayerCountry() == null ? null :payerInfo.getPayerCountry().getValue());
 		info.setPayerid(payerInfo.getPayerID());
 		info.setPayername(payerInfo.getPayerName().getSalutation() + " " +payerInfo.getPayerName().getLastName() + " " +payerInfo.getPayerName().getFirstName());
 		info.setPayerstatus(payerInfo.getPayerStatus() == null ? null : payerInfo.getPayerStatus().getValue());
